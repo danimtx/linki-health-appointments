@@ -12,7 +12,7 @@ export class AppointmentService {
       const existingAppt = await tx.appointment.findFirst({
         where: {
           doctorId: data.doctorId,
-          date: new Date(data.date),
+          date: new Date(data.date + 'T12:00:00Z'),
           startTime: data.startTime,
           OR: [
             { status: 'CONFIRMED' },
@@ -24,7 +24,7 @@ export class AppointmentService {
 
       if (existingAppt) throw new Error('SLOT_OCCUPIED');
 
-      const dateObj = new Date(data.date);
+      const dateObj = new Date(data.date + 'T12:00:00Z');
       const dayOfWeek = dateObj.getUTCDay();
       const rule = await tx.scheduleRule.findUnique({
         where: { doctorId_dayOfWeek: { doctorId: data.doctorId, dayOfWeek } },
@@ -40,14 +40,14 @@ export class AppointmentService {
 
       // Delete any expired pending lock for this exact user/slot before inserting new to avoid clutter
       await tx.appointment.deleteMany({
-        where: { patientId: data.patientId, doctorId: data.doctorId, date: new Date(data.date), startTime: data.startTime, status: 'PENDING' }
+        where: { patientId: data.patientId, doctorId: data.doctorId, date: new Date(data.date + 'T12:00:00Z'), startTime: data.startTime, status: 'PENDING' }
       });
 
       return await tx.appointment.create({
         data: {
           patientId: data.patientId,
           doctorId: data.doctorId,
-          date: new Date(data.date),
+          date: new Date(data.date + 'T12:00:00Z'),
           startTime: data.startTime,
           endTime,
           status: 'PENDING', // Locked for 60s

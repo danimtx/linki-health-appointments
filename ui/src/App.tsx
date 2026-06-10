@@ -38,7 +38,7 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/login" element={<div className="min-h-screen bg-background flex items-center justify-center p-4"><Auth /></div>} />
+        <Route path="/login" element={<div className="min-h-screen bg-background flex items-center justify-center lg:p-4"><Auth /></div>} />
         
         <Route path="/" element={<ProtectedRoute><Layout /></ProtectedRoute>}>
           <Route index element={<AppointmentsWizard />} />

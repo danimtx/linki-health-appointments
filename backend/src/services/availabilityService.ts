@@ -7,7 +7,7 @@ export class AvailabilityService {
    * @param dateString Fecha en formato 'YYYY-MM-DD'
    */
   async getAvailableSlots(doctorId: string, dateString: string): Promise<any[]> {
-    const dateObj = new Date(dateString);
+    const dateObj = new Date(dateString + 'T12:00:00Z');
     // JavaScript getDate: 0 = Sunday, 1 = Monday. Prisma ScheduleRule: 1 = Monday, 0 = Sunday.
     const dayOfWeek = dateObj.getUTCDay(); 
 
@@ -29,7 +29,7 @@ export class AvailabilityService {
     const existingAppointments = await prisma.appointment.findMany({
       where: {
         doctorId,
-        date: new Date(dateString),
+        date: new Date(dateString + 'T12:00:00Z'),
         status: { not: 'CANCELLED' }
       },
       select: {
