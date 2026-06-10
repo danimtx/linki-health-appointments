@@ -183,28 +183,28 @@ function StepDoctor() {
           className="premium-panel cursor-pointer group"
           onClick={() => setDoctor(doc.id)}
         >
-          <CardContent className="p-6 flex flex-col sm:flex-row gap-6 items-start sm:items-center">
-            <div className="flex items-center gap-6 flex-1">
-              <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-xl bg-muted flex-shrink-0 overflow-hidden ring-2 ring-background shadow-md">
+          <CardContent className="p-4 sm:p-6 flex flex-col sm:flex-row gap-4 sm:gap-6 items-start sm:items-center">
+            <div className="flex items-start sm:items-center gap-4 sm:gap-6 flex-1 min-w-0 w-full">
+              <div className="w-16 h-16 sm:w-24 sm:h-24 rounded-xl bg-muted flex-shrink-0 overflow-hidden ring-2 ring-background shadow-md">
                  <img src={`https://api.dicebear.com/7.x/notionists/svg?seed=${doc.name}`} alt={doc.name} className="w-full h-full object-cover" />
               </div>
-              <div>
-                <h3 className="font-bold text-xl group-hover:text-indigo-500 transition-colors">{doc.name}</h3>
-                <p className="text-sm font-medium text-indigo-500 mb-2">{doc.specialty}</p>
-                <p className="text-sm text-muted-foreground line-clamp-2 max-w-md mb-3">
+              <div className="min-w-0 flex-1">
+                <h3 className="font-bold text-lg sm:text-xl group-hover:text-indigo-500 transition-colors truncate">{doc.name}</h3>
+                <p className="text-xs sm:text-sm font-medium text-indigo-500 mb-1.5 truncate">{doc.specialty}</p>
+                <p className="text-xs sm:text-sm text-muted-foreground line-clamp-2 mb-3">
                   {doc.bio || "Profesional de la salud comprometido con el bienestar integral de sus pacientes."}
                 </p>
-                <div className="flex items-center gap-4">
-                  <div className="flex items-center gap-1 text-amber-500 text-sm font-medium bg-amber-50 dark:bg-amber-950/30 px-2 py-1 rounded-md">
-                    <Star className="w-4 h-4 fill-current" />
-                    {doc.rating || '5.0'}
+                <div className="flex flex-wrap items-center gap-2 sm:gap-4">
+                  <div className="flex items-center gap-1 text-amber-500 text-xs sm:text-sm font-medium bg-amber-50 dark:bg-amber-950/30 px-2 py-1 rounded-md">
+                    <Star className="w-3 h-3 sm:w-4 sm:h-4 fill-current" />
+                    {Number(doc.rating || 5).toFixed(1)}
                   </div>
-                  <span className="text-xs text-muted-foreground">+100 pacientes atendidos</span>
+                  <span className="text-[10px] sm:text-xs text-muted-foreground">+100 pacientes</span>
                 </div>
               </div>
             </div>
             
-            <div className="w-full sm:w-auto mt-4 sm:mt-0 flex justify-end">
+            <div className="w-full sm:w-auto mt-2 sm:mt-0 flex justify-end">
               <Button variant="outline" className="w-full sm:w-auto group-hover:bg-indigo-500 group-hover:text-white group-hover:border-indigo-500 transition-all">
                 Elegir Profesional
               </Button>
