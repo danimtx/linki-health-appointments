@@ -6,7 +6,7 @@ import { AuthRequest } from '../middlewares/authMiddleware';
 export class AppointmentController {
   async getAvailability(req: Request, res: Response, next: NextFunction) {
     try {
-      const doctorId = req.params.doctorId;
+      const doctorId = req.params.doctorId as string;
       const date = req.query.date as string;
 
       if (!doctorId || !date) {
@@ -43,8 +43,8 @@ export class AppointmentController {
 
   async confirmAppointment(req: AuthRequest, res: Response, next: NextFunction) {
     try {
-      const patientId = req.user?.id;
-      const appointmentId = req.params.id;
+      const patientId = req.user?.id as string;
+      const appointmentId = req.params.id as string;
 
       if (!patientId || !appointmentId) {
         return res.status(400).json({ success: false, message: 'Faltan campos requeridos' });
