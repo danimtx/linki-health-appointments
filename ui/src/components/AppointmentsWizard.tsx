@@ -6,7 +6,6 @@ import { Button } from './ui/button'
 import { Card, CardContent } from './ui/card'
 import { Input } from './ui/input'
 import { cn } from '../lib/utils'
-import { Auth } from './Auth'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
@@ -48,7 +47,7 @@ export function AppointmentsWizard() {
   }
 
   // Animation variants
-  const variants = {
+  const variants: any = {
     initial: { x: 50, opacity: 0 },
     enter: { x: 0, opacity: 1, transition: { duration: 0.4, ease: [0.22, 1, 0.36, 1] } },
     exit: { x: -50, opacity: 0, transition: { duration: 0.3, ease: [0.22, 1, 0.36, 1] } }

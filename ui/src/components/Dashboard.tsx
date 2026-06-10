@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Card, CardContent } from './ui/card'
 import { Calendar, Clock, Stethoscope, Ticket } from 'lucide-react'
 import { api } from '../api'

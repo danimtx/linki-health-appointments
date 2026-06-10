@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { Card, CardContent } from './ui/card'
 import { Input } from './ui/input'
 import { Button } from './ui/button'
@@ -140,13 +140,13 @@ export const Auth = ({ onComplete }: { onComplete?: () => void }) => {
                   <label className="text-xs font-semibold text-muted-foreground uppercase flex items-center gap-2">
                     <User size={14}/> Nombre
                   </label>
-                  <Input {...register('name')} placeholder="Juan Pérez" className={cn("h-11", errors.name && "border-red-500")} />
-                  {errors.name && <p className="text-xs text-red-500">{errors.name.message as string}</p>}
+                  <Input {...register('name' as any)} placeholder="Juan Pérez" className={cn("h-11", (errors as any).name && "border-red-500")} />
+                  {(errors as any).name && <p className="text-xs text-red-500">{(errors as any).name.message as string}</p>}
                 </div>
                 <div className="space-y-1.5">
                   <label className="text-xs font-semibold text-muted-foreground uppercase flex items-center gap-2">Teléfono</label>
-                  <Input {...register('phone')} type="tel" placeholder="+54 9 11..." className={cn("h-11", errors.phone && "border-red-500")} />
-                  {errors.phone && <p className="text-xs text-red-500">{errors.phone.message as string}</p>}
+                  <Input {...register('phone' as any)} type="tel" placeholder="+54 9 11..." className={cn("h-11", (errors as any).phone && "border-red-500")} />
+                  {(errors as any).phone && <p className="text-xs text-red-500">{(errors as any).phone.message as string}</p>}
                 </div>
               </div>
             )}

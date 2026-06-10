@@ -1,4 +1,3 @@
-import React from 'react'
 import { create } from 'zustand'
 import { motion, AnimatePresence } from 'framer-motion'
 import { AlertCircle, CheckCircle, Info, X } from 'lucide-react'

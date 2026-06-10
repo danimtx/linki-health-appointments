@@ -21,14 +21,14 @@ function App() {
   useEffect(() => {
     supabase.auth.getSession().then(({ data: { session } }) => {
       setAuth(
-        session?.user ? { name: session.user.user_metadata?.name || session.user.email, email: session.user.email } : null, 
+        session?.user ? { name: session.user.user_metadata?.name || session.user.email || '', email: session.user.email || '' } : null, 
         session?.access_token || null
       );
     });
 
     const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
       setAuth(
-        session?.user ? { name: session.user.user_metadata?.name || session.user.email, email: session.user.email } : null, 
+        session?.user ? { name: session.user.user_metadata?.name || session.user.email || '', email: session.user.email || '' } : null, 
         session?.access_token || null
       );
     });
