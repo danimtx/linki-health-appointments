@@ -1,0 +1,98 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  PATIENT
+  DOCTOR
+  ADMIN
+}
+
+enum AppointmentStatus {
+  PENDING
+  CONFIRMED
+  CANCELLED
+  COMPLETED
+}
+
+model User {
+  id            String   @id @default(uuid())
+  email         String   @unique
+  password_hash String
+  name          String
+  phone         String?
+  role          Role     @default(PATIENT)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  patientProfile PatientProfile?
+  doctorProfile  DoctorProfile?
+  appointments   Appointment[]
+}
+
+model PatientProfile {
+  id     String @id @default(uuid())
+  userId String @unique
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model DoctorProfile {
+  id          String   @id @default(uuid())
+  userId      String   @unique
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  specialtyId String
+  specialty   Specialty @relation(fields: [specialtyId], references: [id])
+  bio         String?
+  rating      Float?   @default(5.0)
+  
+  availabilities ScheduleRule[]
+  appointments   Appointment[]  @relation("DoctorAppointments")
+}
+
+model Specialty {
+  id          String   @id @default(uuid())
+  name        String   @unique
+  description String?
+  iconUrl     String?
+  doctors     DoctorProfile[]
+}
+
+model ScheduleRule {
+  id              String   @id @default(uuid())
+  doctorId        String
+  doctor          DoctorProfile @relation(fields: [doctorId], references: [id], onDelete: Cascade)
+  dayOfWeek       Int      // 0 = Sunday, 1 = Monday, ..., 6 = Saturday
+  startTime       String   // Format "HH:mm" ej "09:00"
+  endTime         String   // Format "HH:mm" ej "17:00"
+  slotDurationMin Int      @default(30) // Duración de la cita en minutos
+
+  @@unique([doctorId, dayOfWeek])
+}
+
+model Appointment {
+  id          String   @id @default(uuid())
+  patientId   String
+  patient     User     @relation(fields: [patientId], references: [id])
+  
+  doctorId    String
+  doctor      DoctorProfile @relation("DoctorAppointments", fields: [doctorId], references: [id])
+  
+  date        DateTime // Fecha de la cita sin la hora
+  startTime   String   // Format "HH:mm"
+  endTime     String   // Format "HH:mm"
+  
+  status      AppointmentStatus @default(PENDING)
+  notes       String?
+
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  // Constraint clave: Para evitar double booking, a nivel de DB. 
+  // Nota: Unique(doctorId, date, startTime) no permite citas canceladas en el mismo slot.
+  // Es mejor manejar la lógica transaccional en el código, pero podemos aplicar un @@unique parcial en Postgres.
+}

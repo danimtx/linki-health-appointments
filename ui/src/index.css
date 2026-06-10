@@ -1,0 +1,127 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 98%;
+    --foreground: 240 10% 4%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 240 10% 4%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 240 10% 4%;
+
+    --primary: 239 84% 67%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 240 5% 96%;
+    --secondary-foreground: 240 6% 10%;
+
+    --muted: 240 5% 96%;
+    --muted-foreground: 240 4% 46%;
+
+    --accent: 240 5% 96%;
+    --accent-foreground: 240 6% 10%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 240 6% 90%;
+    --input: 240 6% 90%;
+    --ring: 239 84% 67%;
+
+    --radius: 0.75rem;
+  }
+
+  .dark {
+    --background: 240 10% 4%;
+    --foreground: 0 0% 95%;
+
+    --card: 240 6% 10%;
+    --card-foreground: 0 0% 95%;
+
+    --popover: 240 6% 10%;
+    --popover-foreground: 0 0% 95%;
+
+    --primary: 239 84% 67%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 240 4% 16%;
+    --secondary-foreground: 0 0% 95%;
+
+    --muted: 240 4% 16%;
+    --muted-foreground: 240 5% 65%;
+
+    --accent: 240 4% 16%;
+    --accent-foreground: 0 0% 95%;
+
+    --destructive: 0 63% 31%;
+    --destructive-foreground: 0 0% 95%;
+
+    --border: 240 4% 16%;
+    --input: 240 4% 16%;
+    --ring: 239 84% 67%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+}
+
+/* ─── Display Typography ─── */
+h1, h2, h3, h4, .display-text {
+  font-family: 'Space Grotesk', system-ui, sans-serif;
+  letter-spacing: -0.03em;
+}
+
+/* ─── Premium Panel ─── */
+.premium-panel {
+  @apply bg-card border border-border rounded-xl shadow-sm;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+}
+.premium-panel:hover {
+  @apply border-indigo-400/50 shadow-md;
+  transform: translateY(-2px);
+}
+
+/* ─── Time Slot Pill ─── */
+.time-pill {
+  @apply rounded-lg border border-border;
+  transition: all 0.15s ease;
+}
+
+/* ─── Ticket Tear Line ─── */
+.ticket-border {
+  background-image: repeating-linear-gradient(
+    to right,
+    hsl(var(--border)) 0,
+    hsl(var(--border)) 8px,
+    transparent 8px,
+    transparent 16px
+  );
+  background-size: 100% 2px;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+/* ─── Focus Visible ─── */
+:focus-visible {
+  @apply outline-2 outline-offset-2 outline-indigo-500;
+}
+
+/* ─── Reduced Motion ─── */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
