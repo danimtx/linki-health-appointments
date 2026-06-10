@@ -5,14 +5,6 @@ import react from '@vitejs/plugin-react'
 export default defineConfig({
   plugins: [react()],
   build: {
-    chunkSizeWarningLimit: 1000,
-    rollupOptions: {
-      output: {
-        manualChunks: {
-          vendor: ['react', 'react-dom', 'react-router-dom', 'framer-motion'],
-          ui: ['lucide-react', 'date-fns', 'zod', 'react-hook-form']
-        }
-      }
-    }
+    chunkSizeWarningLimit: 1000
   }
 })
